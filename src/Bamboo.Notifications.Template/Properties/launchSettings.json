@@ -1,0 +1,16 @@
+{
+  "profiles": {
+    "Bamboo.Notifications.Template": {
+      "commandName": "Project",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      }
+    },
+    "Docker-DEV": {
+      "commandName": "Docker",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      }
+    }
+  }
+}

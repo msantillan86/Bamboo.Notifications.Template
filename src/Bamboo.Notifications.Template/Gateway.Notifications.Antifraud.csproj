@@ -1,0 +1,58 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net7.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>warnings</Nullable>
+    <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+    <UserSecretsId>3a034f4d-c63a-4baa-839e-edacbb755b34</UserSecretsId>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Services\**" />
+    <EmbeddedResource Remove="Services\**" />
+    <None Remove="Services\**" />
+  </ItemGroup>
+
+ 
+  <ItemGroup>
+	  <Content Include="appsettings.json">
+		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </Content>
+	  <Content Include="appsettings.Development.json">
+		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		  <DependentUpon>appsettings.json</DependentUpon>
+	  </Content>
+	  <Content Include="appsettings.EKS_dev.json">
+		  <DependentUpon>appsettings.json</DependentUpon>
+		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </Content>
+	  <Content Include="appsettings.EKS_test.json">
+		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		  <DependentUpon>appsettings.json</DependentUpon>
+	  </Content>
+	  <Content Include="appsettings.EKS_stage.json">
+		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		  <DependentUpon>appsettings.json</DependentUpon>
+	  </Content>
+	  <Content Include="appsettings.EKS_prod.json">
+		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		  <DependentUpon>appsettings.json</DependentUpon>
+	  </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Properties\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.17.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Bamboo.Notifications.Template.Application\Bamboo.Notifications.Template.Application.csproj" />
+    <ProjectReference Include="..\Bamboo.Notifications.Template.Infrastructure\Bamboo.Notifications.Template.Infrastructure.csproj" />
+  </ItemGroup>
+
+</Project>

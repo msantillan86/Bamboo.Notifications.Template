@@ -1,0 +1,95 @@
+trigger:
+- release
+- main
+- development
+
+variables:
+- group: AKVBambooDevOps
+- name: buildConfiguration
+  value: 'Release'
+# Completar el releaseName con el bp-"appName" 
+- name: ReleaseName
+  value: 'bp-notification-antifraud'
+# Completar la direccion del Doockerfile
+- name: DockerfileRoute
+  value: './src/Bamboo.Notifications.Template/Dockerfile'
+- name: context
+  value: '.'
+# Completar con el path de proyecto
+- name: projectFile
+  value: '**/Bamboo.Notifications.Template.csproj'
+
+resources:
+  repositories:
+    - repository: templates
+      type: git
+      name: Transversal/TemplatesPipelines
+
+pool:
+  vmImage: ubuntu-latest
+
+name: TagImages_$(Build.BuildID)-$(Build.SourceBranchName)
+
+steps:
+
+# compila y ejecuta test (si no existe los tests, lanza warning)
+- template: build-project-specific-6.yaml@templates
+  parameters:
+    buildConfiguration: $(buildConfiguration)
+    projectFile: $(projectFile)
+
+# ejecuta tests y publica cobertura de código
+- template: execute-unit-tests-and-code-coverage.yaml@templates
+  parameters:
+    buildConfiguration: $(buildConfiguration)
+
+# Se ejecuta solamente ante cambios en la rama development 
+# Genera imagen y hace push a ECR 
+- ${{ if eq(variables['build.sourceBranch'], 'refs/heads/development') }}:
+  - template: build-push-image-create-ECR.yaml@templates
+    parameters:
+      ECR_REPOSITORY_NAME: 'dev-$(ReleaseName)'
+      RELEASE_NAME: '$(ReleaseName)'
+      AWS_REGION: $(aws-region)
+      ECR_URL: $(aws-development-ecr-url)
+      AWS_ACCESS_KEY_ID: $(bamboo-dev-pipeline-aws-access-key-id)
+      AWS_SECRET_ACCESS_KEY: $(bamboo-dev-pipeline-aws-secret-access-key)
+      nuget_config: $(nuget-config)
+      DockerfileRoute: $(DockerfileRoute)
+      Context: $(context)
+      ECRlifecicle: $(ECR-lifecicle)
+      ECRPermissions: $(aws-dev-ecr-permissions)
+
+# Se ejecuta solamente ante cambios en la rama release
+# Genera imagen y hace push a ECR.
+- ${{ if eq(variables['build.sourceBranch'], 'refs/heads/release') }}:
+  - template: build-push-image-create-ECR.yaml@templates
+    parameters:
+      ECR_REPOSITORY_NAME: 'stage-$(ReleaseName)'
+      RELEASE_NAME: '$(ReleaseName)'
+      AWS_REGION: $(aws-region)
+      ECR_URL: $(aws-stage-ecr-url)
+      AWS_ACCESS_KEY_ID: $(bamboo-stage-pipeline-aws-access-key-id)
+      AWS_SECRET_ACCESS_KEY: $(bamboo-stage-pipeline-aws-secret-access-key)
+      nuget_config: $(nuget-config)
+      DockerfileRoute: $(DockerfileRoute)
+      Context: $(context)
+      ECRlifecicle: $(ECR-lifecicle)
+      ECRPermissions: $(aws-stage-ecr-permissions)
+
+# Se ejecuta solamente ante cambios en la rama main
+# Genera imagen y hace push a ECR.
+- ${{ if eq(variables['build.sourceBranch'], 'refs/heads/main') }}:
+  - template: build-push-image-create-ECR.yaml@templates
+    parameters:
+      ECR_REPOSITORY_NAME: 'prod-$(ReleaseName)'
+      RELEASE_NAME: '$(ReleaseName)'
+      AWS_REGION: $(aws-region)
+      ECR_URL: $(aws-prod-ecr-url)
+      AWS_ACCESS_KEY_ID: $(bamboo-prod-pipeline-aws-access-key-id)
+      AWS_SECRET_ACCESS_KEY: $(bamboo-prod-pipeline-aws-secret-access-key)
+      nuget_config: $(nuget-config)
+      DockerfileRoute: $(DockerfileRoute)
+      Context: $(context)
+      ECRlifecicle: $(ECR-lifecicle)
+      ECRPermissions: $(aws-prod-ecr-permissions)

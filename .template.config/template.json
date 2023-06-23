@@ -1,0 +1,14 @@
+{
+    "$schema": "http://json.schemastore.org/template",
+    "author": "Bamboo Payment",
+    "classifications": ["Solution"],
+    "identity": "Bamboo.Notifications.Template",
+    "name": "Bamboo Notifications",
+    "shortName": "sln-bn",
+    "sourceName": "Bamboo.Notifications.Template",
+    "tags": {
+        "language": "C#",
+        "type": "solution"
+    },
+    "preferNameDirectory": true
+}

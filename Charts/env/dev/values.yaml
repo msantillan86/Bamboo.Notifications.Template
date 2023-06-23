@@ -1,0 +1,11 @@
+appName: notification-antifraud
+replicas: 1
+ImageNameTag: 163569635372.dkr.ecr.us-east-1.amazonaws.com/dev-bp-notification-antifraud:1
+MemoryRequest: 128Mi
+MemoryLimit: 512Mi
+CPULimit: 600m
+CPURequest: 100m
+Port: 80
+TargetPort: 80
+
+ASPNETCORE_ENVIRONMENT: EKS_dev
