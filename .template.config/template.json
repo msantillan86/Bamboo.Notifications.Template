@@ -10,5 +10,28 @@
         "language": "C#",
         "type": "solution"
     },
-    "preferNameDirectory": true
+    "preferNameDirectory": true,
+    "symbols": {
+        "Topic": {
+            "type": "parameter",
+            "description": "The name of the topic that you will be listening to.",
+            "datatype": "text",
+            "replaces": "Bamboo-Event-Topic",
+            "defaultValue": "Bamboo-Event-Topic"
+        },
+        "Group": {
+            "type": "parameter",
+            "description": "The name of the group that will listen to the events.",
+            "datatype": "text",
+            "replaces": "Bamboo-Notifications-Group",
+            "defaultValue": "Bamboo-Notifications-Group"
+        },
+        "QueueName": {
+            "type": "parameter",
+            "description": "The name of the queue that will handle retries.",
+            "datatype": "text",
+            "replaces": "notification-template-retries",
+            "defaultValue": "notification-template-retries"
+        }
+    }
 }
