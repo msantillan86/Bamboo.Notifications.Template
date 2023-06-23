@@ -15,7 +15,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bamboo.Notifications.Templa
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bamboo.Notifications.Template.Infrastructure", "src\Bamboo.Notifications.Template.Infrastructure\Bamboo.Notifications.Template.Infrastructure.csproj", "{C03B4D2E-D710-495B-8CFB-1F3A68AB7D21}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bamboo.Notifications.Template.UnitTests", "test\Bamboo.Notifications.Template.UnitTests\Bamboo.Notifications.Template.UnitTests\Bamboo.Notifications.Template.UnitTests.csproj", "{DA1DE4EE-5384-47AE-AFA9-21693501C9F3}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bamboo.Notifications.Template.UnitTests", "test\Bamboo.Notifications.Template.UnitTests\Bamboo.Notifications.Template.UnitTests.csproj", "{DA1DE4EE-5384-47AE-AFA9-21693501C9F3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

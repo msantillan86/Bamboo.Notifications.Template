@@ -24,7 +24,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\src\Bamboo.Notifications.Template.Application\Bamboo.Notifications.Template.Application.csproj" />
+    <ProjectReference Include="..\..\src\Bamboo.Notifications.Template.Application\Bamboo.Notifications.Template.Application.csproj" />
   </ItemGroup>
 
 </Project>
