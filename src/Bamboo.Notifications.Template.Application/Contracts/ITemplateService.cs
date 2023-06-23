@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Bamboo.Notifications.Template.Application.Contracts
 {
-    public interface IAntifraudService
+    public interface ITemplateService
     {
         Task<bool> SendPurchaseAsync(CompleteEventWebModelRequest request);
     }

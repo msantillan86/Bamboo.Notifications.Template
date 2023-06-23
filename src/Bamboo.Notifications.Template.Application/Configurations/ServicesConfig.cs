@@ -2,5 +2,5 @@
 
 public record ServicesConfig
 {
-    public string AntifraudUrl { get; init; }
+    public string TemplateUrl { get; init; }
 }

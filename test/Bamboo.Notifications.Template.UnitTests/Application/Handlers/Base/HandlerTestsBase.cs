@@ -5,7 +5,7 @@ namespace Bamboo.Notifications.Template.UnitTests.Application.Handlers.Base;
 
 public class HandlerTestsBase
 {
-    internal bool GetAntifraudErrorResponse()
+    internal bool GetTemplateErrorResponse()
     {
         var protocolResponse = new ProtocolResponse<object>()
         {
@@ -21,7 +21,7 @@ public class HandlerTestsBase
         return a;
     }
 
-    internal bool GetAntifraudOkResponse()
+    internal bool GetTemplateOkResponse()
     {
         var protocolResponse = new ProtocolResponse<object>()
         {

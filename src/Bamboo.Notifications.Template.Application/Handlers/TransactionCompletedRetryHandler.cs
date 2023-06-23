@@ -13,16 +13,16 @@ namespace Bamboo.Notifications.Template.Application.Handlers;
 public class TransactionCompletedRetryHandler : IRetryHandler<RetryEvent>
 {
     private readonly short[] _retries;
-    private readonly IAntifraudService _AntifraudService;
+    private readonly ITemplateService _templateService;
     private readonly ILogger _logger;
 
     public TransactionCompletedRetryHandler(
         IOptions<BrokerConfig> brokerConfigOptions,
-        IAntifraudService AntifraudService,
+        ITemplateService templateService,
         ILogger logger)
     { 
         _retries = brokerConfigOptions.Value.ConsumerConfig.Retries;
-        _AntifraudService = AntifraudService;
+        _templateService = templateService;
         _logger = logger;
     }
 
@@ -38,7 +38,7 @@ public class TransactionCompletedRetryHandler : IRetryHandler<RetryEvent>
             return await Task.FromResult(response);
         }
         var request = new CompleteEventWebModelRequest(message.PurchaseId);
-        var success = await _AntifraudService.SendPurchaseAsync(request);
+        var success = await _templateService.SendPurchaseAsync(request);
         if (success is false)
         {
             _logger.Warning($"Message Failed, retrying.");

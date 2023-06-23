@@ -9,7 +9,7 @@ public static class DependencyInjection
     public static IServiceCollection AddInfrastuctureServices(this IServiceCollection services)
     {
         services.AddTransient<IBrokerConsumer, BrokerConsumer>();
-        services.AddTransient<IAntifraudService, AntifraudService>();
+        services.AddTransient<ITemplateService, TemplateService>();
         return services;
     }
 }

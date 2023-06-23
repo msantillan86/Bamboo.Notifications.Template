@@ -12,14 +12,14 @@ public class TransactionCompletedHandler : ICommand
 {
     private readonly ILogger _logger;
     private readonly ISqsPublisherService _publisherService;
-    private readonly IAntifraudService _AntifraudService;
+    private readonly ITemplateService _templateService;
 
     public TransactionCompletedHandler(
-        IAntifraudService AntifraudService,
+        ITemplateService templateService,
         ISqsPublisherService publisherService,
         ILogger logger)
     {
-        _AntifraudService = AntifraudService;
+        _templateService = templateService;
         _publisherService = publisherService;
         _logger = logger;
     }
@@ -33,10 +33,10 @@ public class TransactionCompletedHandler : ICommand
             return false;
         }
         var request = new CompleteEventWebModelRequest(validatedResult.Value.PurchaseId);
-        var success = await _AntifraudService.SendPurchaseAsync(request);
+        var success = await _templateService.SendPurchaseAsync(request);
         if (success is false)
         {
-            _logger.Warning($"Antifraud response failed, ready for retry.");
+            _logger.Warning($"Template response failed, ready for retry.");
             await _publisherService.PublishAsync(new RetryEvent() { PurchaseId = validatedResult.Value.PurchaseId });
         }
         return success;

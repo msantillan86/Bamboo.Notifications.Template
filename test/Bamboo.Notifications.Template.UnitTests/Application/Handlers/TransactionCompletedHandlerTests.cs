@@ -12,18 +12,18 @@ namespace Bamboo.Notifications.Template.UnitTests.Application.Handlers;
 public class TransactionCompletedHandlerTests : HandlerTestsBase
 {
     private readonly TransactionCompletedHandler _sut;
-    private readonly Mock<IAntifraudService> _AntifraudServiceMock;
+    private readonly Mock<ITemplateService> _templateServiceMock;
     private readonly Mock<ISqsPublisherService> _publisherServiceMock;
     private readonly Mock<ILogger> _loggerMock;
 
     public TransactionCompletedHandlerTests()
     {
-        _AntifraudServiceMock = new Mock<IAntifraudService>();
+        _templateServiceMock = new Mock<ITemplateService>();
         _publisherServiceMock = new Mock<ISqsPublisherService>();
         _loggerMock = new Mock<ILogger>();
 
         _sut = new TransactionCompletedHandler(
-            _AntifraudServiceMock.Object,
+            _templateServiceMock.Object,
             _publisherServiceMock.Object,
             _loggerMock.Object);
     }
@@ -34,8 +34,8 @@ public class TransactionCompletedHandlerTests : HandlerTestsBase
         // Arrange
         var validRawMessage = "{\"CommerceAccountId\":1,\"PurchaseId\":1}";
 
-        _AntifraudServiceMock.Setup(x => x.SendPurchaseAsync(It.IsAny<CompleteEventWebModelRequest>()))
-            .ReturnsAsync(GetAntifraudOkResponse());
+        _templateServiceMock.Setup(x => x.SendPurchaseAsync(It.IsAny<CompleteEventWebModelRequest>()))
+            .ReturnsAsync(GetTemplateOkResponse());
 
         // Act
         var result = await _sut.Handle(validRawMessage);
@@ -50,8 +50,8 @@ public class TransactionCompletedHandlerTests : HandlerTestsBase
         // Arrange
         var validRawMessage = "{\"CommerceAccountId\":1,\"PurchaseId\":1}";
 
-        _AntifraudServiceMock.Setup(x => x.SendPurchaseAsync(It.IsAny<CompleteEventWebModelRequest>()))
-            .ReturnsAsync(GetAntifraudOkResponse());
+        _templateServiceMock.Setup(x => x.SendPurchaseAsync(It.IsAny<CompleteEventWebModelRequest>()))
+            .ReturnsAsync(GetTemplateOkResponse());
 
         // Act
         await _sut.Handle(validRawMessage);
@@ -70,8 +70,8 @@ public class TransactionCompletedHandlerTests : HandlerTestsBase
         // Arrange
         var invalidRawMessage = rawMessage;
 
-        _AntifraudServiceMock.Setup(x => x.SendPurchaseAsync(It.IsAny<CompleteEventWebModelRequest>()))
-            .ReturnsAsync(GetAntifraudOkResponse());
+        _templateServiceMock.Setup(x => x.SendPurchaseAsync(It.IsAny<CompleteEventWebModelRequest>()))
+            .ReturnsAsync(GetTemplateOkResponse());
 
         // Act
         var result = await _sut.Handle(invalidRawMessage);

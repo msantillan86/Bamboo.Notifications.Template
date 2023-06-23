@@ -1,6 +1,6 @@
-appName: notification-antifraud
+appName: notification-template
 replicas: 1
-ImageNameTag: 217866098974.dkr.ecr.us-east-1.amazonaws.com/test-bp-notification-antifraud:1
+ImageNameTag: 217866098974.dkr.ecr.us-east-1.amazonaws.com/test-bp-notification-template:1
 MemoryRequest: 128Mi
 MemoryLimit: 512Mi
 CPULimit: 600m

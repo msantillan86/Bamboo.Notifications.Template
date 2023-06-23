@@ -9,7 +9,7 @@ variables:
   value: 'Release'
 # Completar el releaseName con el bp-"appName" 
 - name: ReleaseName
-  value: 'bp-notification-antifraud'
+  value: 'bp-notification-template'
 # Completar la direccion del Doockerfile
 - name: DockerfileRoute
   value: './src/Bamboo.Notifications.Template/Dockerfile'

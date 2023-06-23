@@ -14,19 +14,19 @@ namespace Bamboo.Notifications.Template.UnitTests.Application.Handlers;
 public class TransactionCompletedRetryHandlerTests : HandlerTestsBase
 {
     private readonly TransactionCompletedRetryHandler _sut;
-    private readonly Mock<IAntifraudService> _AntifraudServiceMock;
+    private readonly Mock<ITemplateService> _templateServiceMock;
     private readonly Mock<ILogger> _loggerMock;
     private readonly Mock<IOptions<BrokerConfig>> _brokerConfigOptionsMock;
 
     public TransactionCompletedRetryHandlerTests()
     {
-        _AntifraudServiceMock = new Mock<IAntifraudService>();
+        _templateServiceMock = new Mock<ITemplateService>();
         _loggerMock = new Mock<ILogger>();
         _brokerConfigOptionsMock = new Mock<IOptions<BrokerConfig>>();
         _brokerConfigOptionsMock.Setup(x => x.Value).Returns(GetBrokerConfig());
         _sut = new TransactionCompletedRetryHandler(
             _brokerConfigOptionsMock.Object,
-            _AntifraudServiceMock.Object,
+            _templateServiceMock.Object,
             _loggerMock.Object);
     }
 
@@ -34,8 +34,8 @@ public class TransactionCompletedRetryHandlerTests : HandlerTestsBase
     public async Task Handle_HappyPath_ReturnsSuccess()
     {
         // Arrange
-        _AntifraudServiceMock.Setup(x => x.SendPurchaseAsync(It.IsAny<CompleteEventWebModelRequest>()))
-                               .ReturnsAsync(GetAntifraudOkResponse());
+        _templateServiceMock.Setup(x => x.SendPurchaseAsync(It.IsAny<CompleteEventWebModelRequest>()))
+                               .ReturnsAsync(GetTemplateOkResponse());
 
         var message = new RetryEvent { PurchaseId = 123, ReceiveCount = 1 };
 
@@ -47,11 +47,11 @@ public class TransactionCompletedRetryHandlerTests : HandlerTestsBase
     }
 
     [Fact]
-    public async Task Handle_AntifraudFails_ReturnsReprocess()
+    public async Task Handle_WhenFails_ReturnsReprocess()
     {
         // Arrange
-        _AntifraudServiceMock.Setup(x => x.SendPurchaseAsync(It.IsAny<CompleteEventWebModelRequest>()))
-                               .ReturnsAsync(GetAntifraudErrorResponse());
+        _templateServiceMock.Setup(x => x.SendPurchaseAsync(It.IsAny<CompleteEventWebModelRequest>()))
+                               .ReturnsAsync(GetTemplateErrorResponse());
 
         var message = new RetryEvent { PurchaseId = 123, ReceiveCount = 1 };
 
